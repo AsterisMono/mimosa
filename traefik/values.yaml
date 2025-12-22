@@ -17,9 +17,27 @@ ports:
   websecure:
     port: 443
 
-# We will configure our own gateway.
 gateway:
-  enabled: false
+  enabled: true
+  name: traefik-gateway
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  listeners:
+    web:
+      port: 80
+      hostname: "*.requiem.garden"
+      protocol: HTTP
+      namespacePolicy:
+        from: All
+    websecure:
+      port: 443
+      hostname: "*.requiem.garden"
+      protocol: HTTPS
+      namespacePolicy:
+        from: All
+      certificateRefs:
+        - name: rgarden-tls
+          namespace: traefik
 
 api:
   dashboard: true
