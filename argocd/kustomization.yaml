@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://www.schemastore.org/kustomization.json
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  # - https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+  - installer.yaml
+  - namespace.yaml
+  - httproutes.yaml
+
+namespace: argocd
+
+patches:
+  - patch: |-
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: argocd-cmd-params-cm
+      data:
+        server.insecure: "true"
+    target:
+      kind: ConfigMap
+      name: argocd-cmd-params-cm

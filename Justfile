@@ -13,4 +13,4 @@ k8s-dashboard:
     kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-kong-proxy 8443:443
 
 generate-k8s-dashboard-token:
-    kubectl create token lyra -n kubernetes-dashboard
+    kubectl create token lyra -n kubernetes-dashboard | pbcopy

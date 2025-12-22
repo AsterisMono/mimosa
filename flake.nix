@@ -25,6 +25,7 @@
             kubeconform
             kustomize
             kubernetes-helm
+            argocd
 
             just
           ];
