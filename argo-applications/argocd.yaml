@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/KevinNitroG/argocd-json-schema/refs/heads/main/schemas/v3.0.9/standalone/v1alpha1applicationset.json
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/AsterisMono/mimosa
+    path: argocd
+    targetRevision: HEAD
+  destination:
+    namespace: argocd

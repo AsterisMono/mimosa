@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/KevinNitroG/argocd-json-schema/refs/heads/main/schemas/v3.0.9/standalone/v1alpha1applicationset.json
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+spec:
+  project: default
+  sources:
+    - repoURL: https://charts.jetstack.io
+      targetRevision: v1.19.2
+      helm:
+        parameters:
+          - name: crds.enabled
+            value: "true"
+      chart: cert-manager
+    - repoURL: https://github.com/AsterisMono/mimosa
+      path: cert-manager
+      targetRevision: HEAD
+  destination:
+    namespace: cert-manager
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

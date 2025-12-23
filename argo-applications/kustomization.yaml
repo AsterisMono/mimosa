@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://www.schemastore.org/kustomization.json
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - argocd.yaml
+  - traefik.yaml
+  - cert-manager.yaml
+  - pocketid.yaml
+  - kubernetes-dashboard.yaml
+
+patches:
+  - patch: |-
+      apiVersion: argoproj.io/v1alpha1
+      kind: Application
+      metadata:
+        name: not-used
+      spec:
+        destination:
+          server: https://kubernetes.default.svc
+    target:
+      kind: Application
+
+namespace: argocd
