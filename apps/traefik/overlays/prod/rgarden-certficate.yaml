@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: rgarden-tls
+  namespace: traefik
+spec:
+  secretName: rgarden-tls
+  commonName: "*.requiem.garden"
+  dnsNames:
+    - "*.requiem.garden"
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer

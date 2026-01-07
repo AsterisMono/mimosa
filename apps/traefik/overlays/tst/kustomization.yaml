@@ -4,6 +4,7 @@ kind: Kustomization
 
 resources:
   - ../../base
+  - rgarden-certficate.yaml
 
 patches:
   - target:
