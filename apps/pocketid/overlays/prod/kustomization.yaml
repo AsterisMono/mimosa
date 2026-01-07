@@ -8,6 +8,7 @@ resources:
 
 configMapGenerator:
   - name: pocketid-config
+    behavior: merge
     envs:
       - config.env
 
