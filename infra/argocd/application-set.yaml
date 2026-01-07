@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: mimosa-apps
+  namespace: argocd
+spec:
+  goTemplate: true
+  generators:
+    - matrix:
+        generators:
+          - git:
+              repoURL: https://github.com/AsterisMono/mimosa.git
+              revision: main
+              directories:
+                - path: apps/*/overlays/*
+          - clusters:
+              selector:
+                matchLabels:
+                  env: "{{ .path.basename }}"
+  template:
+    metadata:
+      name: "{{ .path.basename }}-{{ index .path.segments 1 }}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/AsterisMono/mimosa.git
+        targetRevision: main
+        path: "{{ .path.path }}"
+      destination:
+        server: "{{ .server }}"
+        namespace: "{{ index .path.segments 1 }}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
