@@ -20,3 +20,13 @@ patches:
     target:
       kind: ConfigMap
       name: argocd-cmd-params-cm
+  - patch: |-
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: argocd-cm
+      data:
+        kustomize.buildOptions: --enable-helm
+    target:
+      kind: ConfigMap
+      name: argocd-cm
