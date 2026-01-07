@@ -13,16 +13,14 @@ seal-secret app env secret_name *args:
         exit 1; \
     fi
     @mkdir -p apps/{{ app }}/overlays/{{ env }}
-    @echo "Encrypting for {{ env }}..."
+    @echo "Encrypting for {{ env }} (Namespace: {{ app }})..."
 
-    # 修复 printf 参数解释问题，并构建 kubectl 参数列表
     kubectl create secret generic {{ secret_name }} \
+        -n {{ app }} \
         $(for pair in {{ args }}; do printf -- "--from-literal=%s " "$pair"; done) \
         --dry-run=client -o yaml | \
     kubeseal --cert {{ SEAL_KEYS_DIR }}/{{ env }}.pem --format yaml > \
         apps/{{ app }}/overlays/{{ env }}/{{ secret_name }}.yaml
-
-    @echo "SealedSecret saved to: apps/{{ app }}/overlays/{{ env }}/{{ secret_name }}.yaml"
 
 traefik-dashboard:
     kubectl port-forward $(kubectl get pods --selector "app.kubernetes.io/name=traefik" --output=name -n traefik) 8080:8080 -n traefik
