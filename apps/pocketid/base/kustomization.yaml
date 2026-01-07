@@ -3,16 +3,15 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - base/namespace.yaml
-  - base/secrets.yaml
-  - base/persistentvolumeclaim.yaml
-  - base/deployment.yaml
-  - base/service.yaml
-  - base/httproute.yaml
-
-namespace: pocketid
+  - namespace.yaml
+  - persistentvolumeclaim.yaml
+  - deployment.yaml
+  - service.yaml
+  - httproute.yaml
 
 configMapGenerator:
   - name: pocketid-config
     envs:
       - config.env
+
+namespace: pocketid
