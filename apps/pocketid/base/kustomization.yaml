@@ -8,9 +8,4 @@ resources:
   - service.yaml
   - httproute.yaml
 
-configMapGenerator:
-  - name: pocketid-config
-    envs:
-      - config.env
-
 namespace: pocketid
