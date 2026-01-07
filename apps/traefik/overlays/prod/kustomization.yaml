@@ -6,15 +6,14 @@ resources:
   - ../../base
 
 patches:
-  - patch: |-
-      apiVersion: gateway.networking.k8s.io/v1
+  - target:
       kind: Gateway
-      metadata:
-        name: traefik-gateway
-        namespace: traefik
-      spec:
-        listeners:
-          - name: web
-            hostname: "*.requiem.garden"
-          - name: websecure
-            hostname: "*.requiem.garden"
+      name: traefik-gateway
+    patch: |-
+      - op: replace
+        path: /spec/listeners/0/hostname
+        value: "*.requiem.garden"
+
+      - op: replace
+        path: /spec/listeners/1/hostname
+        value: "*.requiem.garden"

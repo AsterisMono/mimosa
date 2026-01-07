@@ -36,7 +36,9 @@ gateway:
       namespacePolicy:
         from: All
       certificateRefs:
-        - name: rgarden-tls
+        - group: ""
+          kind: Secret
+          name: rgarden-tls
           namespace: traefik
 
 api:
