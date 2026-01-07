@@ -4,11 +4,20 @@ metadata:
   name: pocketid-httproute
 spec:
   parentRefs:
-    - name: traefik-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: traefik-gateway
       namespace: traefik
   hostnames:
     - "citadel.requiem.garden"
   rules:
     - backendRefs:
-        - name: pocketid-service
+        - group: ""
+          kind: Service
+          name: pocketid-service
           port: 80
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
