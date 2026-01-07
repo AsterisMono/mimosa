@@ -6,7 +6,7 @@ fetch-key env:
     kubeseal --fetch-cert --context mimosa-{{ env }} > {{ SEAL_KEYS_DIR }}/{{ env }}.pem
     @echo "Cluster public key fetched: {{ SEAL_KEYS_DIR }}/{{ env }}.pem"
 
-# 使用方式: just seal-secret pocketid tst db-secrets "user=admin" "pass=123"
+# just seal-secret pocketid tst db-secrets "user=admin" "pass=123"
 seal-secret app env secret_name *args:
     @if [ ! -f {{ SEAL_KEYS_DIR }}/{{ env }}.pem ]; then \
         echo "Error: Public key for {{ env }} not found. Run 'just fetch-key {{ env }}' first."; \
@@ -24,14 +24,6 @@ seal-secret app env secret_name *args:
 
 traefik-dashboard:
     kubectl port-forward $(kubectl get pods --selector "app.kubernetes.io/name=traefik" --output=name -n traefik) 8080:8080 -n traefik
-
-update-traefik:
-    helm upgrade traefik traefik/traefik \
-        --namespace traefik \
-        --values ./traefik/values.yaml
-
-restart-cert-manager:
-    kubectl rollout restart deployment cert-manager -n cert-manager
 
 k8s-dashboard:
     kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-kong-proxy 8443:443
