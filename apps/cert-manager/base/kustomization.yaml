@@ -14,5 +14,3 @@ helmCharts:
 
 resources:
   - letsencrypt-issuer.yaml
-
-namespace: cert-manager
