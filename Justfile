@@ -1,17 +1,5 @@
-SEAL_KEYS_DIR := ".seals"
-
-fetch-key env:
-    @mkdir -p {{ SEAL_KEYS_DIR }}
-    @echo "Syncing {{ env }} key"
-    kubeseal --fetch-cert --context mimosa-{{ env }} > {{ SEAL_KEYS_DIR }}/{{ env }}.pem
-    @echo "Cluster public key fetched: {{ SEAL_KEYS_DIR }}/{{ env }}.pem"
-
 # just seal-secret pocketid tst db-secrets "user=admin" "pass=123"
 seal-secret app env secret_name *args:
-    @if [ ! -f {{ SEAL_KEYS_DIR }}/{{ env }}.pem ]; then \
-        echo "Error: Public key for {{ env }} not found. Run 'just fetch-key {{ env }}' first."; \
-        exit 1; \
-    fi
     @mkdir -p apps/{{ app }}/overlays/{{ env }}
     @echo "Encrypting for {{ env }} (Namespace: {{ app }})..."
 
@@ -19,7 +7,7 @@ seal-secret app env secret_name *args:
         -n {{ app }} \
         $(for pair in {{ args }}; do printf -- "--from-literal=%s " "$pair"; done) \
         --dry-run=client -o yaml | \
-    kubeseal --cert {{ SEAL_KEYS_DIR }}/{{ env }}.pem --format yaml > \
+    kubeseal --context mimosa-{{ env }} --format yaml > \
         apps/{{ app }}/overlays/{{ env }}/{{ secret_name }}.yaml
 
 traefik-dashboard:
