@@ -3,7 +3,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: mimosa-apps
-  namespace: argocd
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
@@ -12,21 +11,21 @@ spec:
         generators:
           - git:
               repoURL: https://github.com/AsterisMono/mimosa.git
-              revision: main
+              revision: $REVISION
               directories:
-                - path: apps/*/overlays/*
+                - path: apps/*/overlays/$ENV
           - clusters:
               selector:
                 matchLabels:
-                  env: "{{ .path.basename }}"
+                  env: $ENV
   template:
     metadata:
       name: "{{ .path.basename }}-{{ index .path.segments 1 }}"
     spec:
-      project: default
+      project: $MIMOSA_PROJECT
       source:
         repoURL: https://github.com/AsterisMono/mimosa.git
-        targetRevision: main
+        targetRevision: $REVISION
         path: "{{ .path.path }}"
       destination:
         server: "{{ .server }}"

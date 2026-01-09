@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/KevinNitroG/argocd-json-schema/refs/heads/main/schemas/v3.2.2/standalone-strict/v1alpha1appproject.json
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: mimosa-project
+spec:
+  sourceRepos:
+    - "https://github.com/AsterisMono/mimosa"
+  destinations:
+    - namespace: "*"
+      name: $MIMOSA_CLUSTER
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"

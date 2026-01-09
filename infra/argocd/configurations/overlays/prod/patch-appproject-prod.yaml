@@ -1,0 +1,9 @@
+# Project name
+- op: replace
+  path: /metadata/name
+  value: mimosa-project-prod
+
+# Destination cluster
+- op: replace
+  path: /spec/destinations/0/name
+  value: mimosa-prod
