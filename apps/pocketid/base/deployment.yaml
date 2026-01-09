@@ -25,15 +25,15 @@ spec:
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: pocketid.rhizome.credentials.postgresql.acid.zalan.do
+                  name: pocketid.pocketid-postgres.credentials.postgresql.acid.zalan.do
                   key: username
             - name: DB_PASS
               valueFrom:
                 secretKeyRef:
-                  name: pocketid.rhizome.credentials.postgresql.acid.zalan.do
+                  name: pocketid.pocketid-postgres.credentials.postgresql.acid.zalan.do
                   key: password
             - name: DB_CONNECTION_STRING
-              value: "postgres://$(DB_USER):$(DB_PASS)@rhizome-pooler.infra-data:5432/pocketid"
+              value: "postgres://$(DB_USER):$(DB_PASS)@pocketid-postgres-pooler.pocketid:5432/pocketid"
           envFrom:
             - configMapRef:
                 name: pocketid-config

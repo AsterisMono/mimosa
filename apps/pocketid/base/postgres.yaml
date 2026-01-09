@@ -1,21 +1,21 @@
-kind: "postgresql"
-apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+apiVersion: acid.zalan.do/v1
 
 metadata:
-  name: "rhizome"
-  namespace: "infra-data"
+  name: pocketid-postgres
+  namespace: pocketid
   labels:
     team: rgarden
 
 spec:
-  teamId: "rgarden"
+  teamId: rgarden
   postgresql:
     version: "17"
-  numberOfInstances: 2
+  numberOfInstances: 1
   enableConnectionPooler: true
   volume:
-    size: "20Gi"
-    storageClass: "local-path"
+    size: 5Gi
+    storageClass: local-path
   users:
     pocketid: []
   databases:
