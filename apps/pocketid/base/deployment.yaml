@@ -21,11 +21,25 @@ spec:
           ports:
             - containerPort: 1411
               name: http
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: pocketid.rhizome.credentials.postgresql.acid.zalan.do
+                  key: username
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: pocketid.rhizome.credentials.postgresql.acid.zalan.do
+                  key: password
+            - name: DB_CONNECTION_STRING
+              value: "postgres://$(DB_USER):$(DB_PASS)@rhizome-pooler.infra-data:5432/pocketid"
           envFrom:
             - configMapRef:
                 name: pocketid-config
             - secretRef:
                 name: pocketid-secrets
+
       volumes:
         - name: pocketid-data
           persistentVolumeClaim:

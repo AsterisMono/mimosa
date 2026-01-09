@@ -1,0 +1,29 @@
+kind: "postgresql"
+apiVersion: "acid.zalan.do/v1"
+
+metadata:
+  name: "rhizome"
+  namespace: "infra-data"
+  labels:
+    team: rgarden
+
+spec:
+  teamId: "rgarden"
+  postgresql:
+    version: "17"
+  numberOfInstances: 2
+  enableConnectionPooler: true
+  volume:
+    size: "20Gi"
+    storageClass: "local-path"
+  users:
+    pocketid: []
+  databases:
+    pocketid: pocketid
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
+    limits:
+      cpu: 500m
+      memory: 1000Mi
