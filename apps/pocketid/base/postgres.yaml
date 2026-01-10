@@ -12,14 +12,14 @@ spec:
   postgresql:
     version: "17"
   numberOfInstances: 1
-  enableConnectionPooler: true
   volume:
     size: 5Gi
     storageClass: local-path
-  users:
-    pocketid: []
-  databases:
-    pocketid: pocketid
+  preparedDatabases:
+    pocketid:
+      defaultUsers: true
+      schemas:
+        public: {}
   resources:
     requests:
       cpu: 100m
