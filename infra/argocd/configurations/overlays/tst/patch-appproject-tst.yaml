@@ -1,9 +1,0 @@
-# Project name
-- op: replace
-  path: /metadata/name
-  value: mimosa-project-tst
-
-# Destination cluster
-- op: replace
-  path: /spec/destinations/0/name
-  value: mimosa-tst

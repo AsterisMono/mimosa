@@ -7,8 +7,8 @@ spec:
   sourceRepos:
     - "https://github.com/AsterisMono/mimosa"
   destinations:
-    - namespace: "*"
-      name: $MIMOSA_CLUSTER
+    - name: "mimosa-*"
+      namespace: "*"
   clusterResourceWhitelist:
     - group: "*"
       kind: "*"

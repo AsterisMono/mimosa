@@ -22,7 +22,7 @@ spec:
     metadata:
       name: "{{ .path.basename }}-{{ index .path.segments 1 }}"
     spec:
-      project: $MIMOSA_PROJECT
+      project: mimosa-project
       source:
         repoURL: https://github.com/AsterisMono/mimosa.git
         targetRevision: $REVISION

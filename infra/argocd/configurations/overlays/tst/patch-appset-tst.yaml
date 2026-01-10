@@ -18,11 +18,6 @@
   path: /spec/generators/0/matrix/generators/1/clusters/selector/matchLabels/env
   value: tst
 
-# Project name
-- op: replace
-  path: /spec/template/spec/project
-  value: mimosa-project-tst
-
 # Source revision
 - op: replace
   path: /spec/template/spec/source/targetRevision

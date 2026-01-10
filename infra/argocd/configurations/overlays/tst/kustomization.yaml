@@ -10,7 +10,3 @@ patches:
       kind: ApplicationSet
       name: mimosa-apps
     path: patch-appset-tst.yaml
-  - target:
-      kind: AppProject
-      name: mimosa-project
-    path: patch-appproject-tst.yaml
