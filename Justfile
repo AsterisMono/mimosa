@@ -12,9 +12,3 @@ seal-secret app env secret_name *args:
 
 traefik-dashboard:
     kubectl port-forward $(kubectl get pods --selector "app.kubernetes.io/name=traefik" --output=name -n traefik) 8080:8080 -n traefik
-
-k8s-dashboard:
-    kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-kong-proxy 8443:443
-
-generate-k8s-dashboard-token:
-    kubectl create token lyra -n kubernetes-dashboard | pbcopy
