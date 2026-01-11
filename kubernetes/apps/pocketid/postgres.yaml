@@ -13,7 +13,7 @@ spec:
     version: "17"
   numberOfInstances: 1
   volume:
-    size: 5Gi
+    size: 10Gi
     storageClass: hcloud-volumes
   preparedDatabases:
     pocketid:
