@@ -15,6 +15,8 @@
     packer
     talosctl
     just
+    jq
+    cilium-cli
     _1password-cli
   ];
 

@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/KevinNitroG/argocd-json-schema/refs/heads/main/schemas/v3.2.2/standalone-strict/v1alpha1appproject.json
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: mimosa-apps
+spec:
+  sourceRepos:
+    - "https://github.com/AsterisMono/mimosa"
+  destinations:
+    - name: "mimosa"
+      namespace: "*"
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/KevinNitroG/argocd-json-schema/refs/heads/main/schemas/v3.2.2/standalone-strict/v1alpha1applicationset.json
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: mimosa-apps
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: https://github.com/AsterisMono/mimosa.git
+        revision: main
+        directories:
+          - path: kubernetes/apps/*
+  template:
+    metadata:
+      name: "{{ .path.basename }}"
+    spec:
+      project: mimosa-apps
+      source:
+        repoURL: https://github.com/AsterisMono/mimosa.git
+        targetRevision: main
+        path: "{{ .path.path }}"
+      destination:
+        name: "mimosa"
+        namespace: "{{ .path.basename }}"
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true

@@ -28,11 +28,14 @@ module "kubernetes" {
   cluster_name = "mimosa"
   hcloud_token = var.hcloud_token
 
-  cluster_kubeconfig_path  = "kubeconfig"
-  cluster_talosconfig_path = "talosconfig"
+  cluster_kubeconfig_path  = "../.kube/kubeconfig"
+  cluster_talosconfig_path = "../.kube/talosconfig"
 
-  cert_manager_enabled       = true
   cilium_gateway_api_enabled = true
+
+  talos_extra_remote_manifests = [
+    "https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.34.0/controller.yaml"
+  ]
 
   # Do not auto detect current operator IP
   firewall_use_current_ipv4 = false

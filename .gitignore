@@ -40,3 +40,5 @@ secrets/
 .kube
 kubeconfig
 talosconfig
+
+*credentials.json

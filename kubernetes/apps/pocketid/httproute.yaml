@@ -1,0 +1,23 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: pocketid-httproute
+spec:
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: cilium-gateway
+      namespace: networking
+  hostnames:
+    - "citadel.requiem.garden"
+  rules:
+    - backendRefs:
+        - group: ""
+          kind: Service
+          name: pocketid-service
+          port: 80
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /

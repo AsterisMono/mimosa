@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://www.schemastore.org/kustomization.json
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - https://raw.githubusercontent.com/argoproj/argo-cd/v3.2.2/manifests/install.yaml
+  - namespace.yaml
+  - projects/apps.yaml
+  - projects/infra.yaml
+
+namespace: argocd
+
+patches:
+  - patch: |-
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: argocd-cm
+      data:
+        kustomize.buildOptions: --enable-helm
+    target:
+      kind: ConfigMap
+      name: argocd-cm

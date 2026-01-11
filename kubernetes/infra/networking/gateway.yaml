@@ -1,0 +1,32 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: cilium-gateway
+spec:
+  gatewayClassName: cilium
+  infrastructure:
+    annotations:
+      load-balancer.hetzner.cloud/name: "mimosa-cilium-gateway-fsn1"
+      load-balancer.hetzner.cloud/location: "fsn1"
+      load-balancer.hetzner.cloud/uses-proxyprotocol: "true"
+  listeners:
+    - name: https
+      protocol: HTTPS
+      port: 443
+      hostname: "*.requiem.garden"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: rgarden-tls
+            kind: Secret
+            group: ""
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: http
+      protocol: HTTP
+      port: 80
+      hostname: "*.requiem.garden"
+      allowedRoutes:
+        namespaces:
+          from: All
