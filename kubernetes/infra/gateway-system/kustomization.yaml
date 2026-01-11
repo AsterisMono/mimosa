@@ -4,6 +4,6 @@ kind: Kustomization
 
 resources:
   - rgarden-certificate.yaml
-  - gateway.yaml
+  - cilium-gateway.yaml
 
-namespace: networking
+namespace: gateway-system

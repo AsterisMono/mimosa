@@ -7,7 +7,7 @@ spec:
     - group: gateway.networking.k8s.io
       kind: Gateway
       name: cilium-gateway
-      namespace: networking
+      namespace: gateway-system
   hostnames:
     - "citadel.requiem.garden"
   rules:
