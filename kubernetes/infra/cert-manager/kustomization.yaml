@@ -6,3 +6,19 @@ resources:
   - https://github.com/cert-manager/cert-manager/releases/download/v1.19.2/cert-manager.yaml
   - letsencrypt-dns01-issuer.yaml
   - cloudflare-token-secret.yaml
+
+patches:
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: not-used
+      spec:
+        template:
+          spec:
+            nodeSelector:
+              node-role.kubernetes.io/control-plane: ""
