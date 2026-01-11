@@ -40,6 +40,9 @@ spec:
         name: "mimosa"
         namespace: "{{ .path.basename }}"
       syncPolicy:
+        automated:
+          prune: true
+          selfHeal: false
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true
