@@ -14,15 +14,12 @@ patches:
         name: operator-oauth
         namespace: tailscale
       $patch: delete
-  - target:
-      group: apps
-      version: v1
-      kind: Deployment
-    patch: |-
+  - patch: |-
       apiVersion: apps/v1
       kind: Deployment
       metadata:
-        name: not-used
+        name: operator
+        namespace: tailscale
       spec:
         template:
           spec:
