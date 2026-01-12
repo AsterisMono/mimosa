@@ -14,23 +14,3 @@ helmCharts:
     version: 1.15.1
     releaseName: postgres-operator-ui
     namespace: postgres-operator
-
-patches:
-  - target:
-      group: apps
-      version: v1
-      kind: Deployment
-    patch: |-
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        name: not-used
-      spec:
-        template:
-          spec:
-            nodeSelector:
-              node-role.kubernetes.io/control-plane: ""
-            tolerations:
-              - effect: NoSchedule
-                key: node-role.kubernetes.io/control-plane
-                operator: Exists

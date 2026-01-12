@@ -21,18 +21,3 @@ patches:
         name: tailscale
         labels:
           pod-security.kubernetes.io/enforce: privileged
-  - patch: |-
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        name: operator
-        namespace: tailscale
-      spec:
-        template:
-          spec:
-            nodeSelector:
-              node-role.kubernetes.io/control-plane: ""
-            tolerations:
-              - effect: NoSchedule
-                key: node-role.kubernetes.io/control-plane
-                operator: Exists
