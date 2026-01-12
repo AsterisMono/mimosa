@@ -4,3 +4,12 @@ kind: Kustomization
 
 resources:
   - https://github.com/prometheus-operator/kube-prometheus.git
+
+patches:
+  - patch: |-
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: monitoring
+        labels:
+          pod-security.kubernetes.io/enforce: privileged
