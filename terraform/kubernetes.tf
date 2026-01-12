@@ -31,7 +31,10 @@ module "kubernetes" {
   cluster_kubeconfig_path  = "../.kube/kubeconfig"
   cluster_talosconfig_path = "../.kube/talosconfig"
 
-  cilium_gateway_api_enabled = true
+  cilium_gateway_api_enabled  = true
+  cilium_hubble_enabled       = true
+  cilium_hubble_relay_enabled = true
+  cilium_hubble_ui_enabled    = true
 
   talos_extra_remote_manifests = [
     "https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.34.0/controller.yaml"
