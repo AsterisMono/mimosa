@@ -27,4 +27,11 @@
     AWS_ACCESS_KEY_ID = "op://Requiem.Garden/Hetzner.Token.S3.MimosaTerraformState/username";
     AWS_SECRET_ACCESS_KEY = "op://Requiem.Garden/Hetzner.Token.S3.MimosaTerraformState/credential";
   };
+
+  git-hooks.hooks.kubeconform = {
+    enable = true;
+    name = "kubeconform";
+    files = "kubernetes/.*\.yaml";
+    entry = "kubeconform -schema-location default -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' -schema-location 'https://www.schemastore.org/kustomization.json' -strict";
+  };
 }
