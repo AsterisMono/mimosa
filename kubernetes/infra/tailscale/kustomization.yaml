@@ -15,6 +15,13 @@ patches:
         namespace: tailscale
       $patch: delete
   - patch: |-
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: tailscale
+        labels:
+          pod-security.kubernetes.io/enforce: privileged
+  - patch: |-
       apiVersion: apps/v1
       kind: Deployment
       metadata:
