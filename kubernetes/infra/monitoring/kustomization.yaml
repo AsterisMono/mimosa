@@ -13,3 +13,27 @@ patches:
         name: monitoring
         labels:
           pod-security.kubernetes.io/enforce: privileged
+  - patch: |-
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: grafana
+        namespace: monitoring
+        annotations:
+          tailscale.com/expose: "true"
+  - patch: |-
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: prometheus-k8s
+        namespace: monitoring
+        annotations:
+          tailscale.com/expose: "true"
+  - patch: |-
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: alertmanager-main
+        namespace: monitoring
+        annotations:
+          tailscale.com/expose: "true"
