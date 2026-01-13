@@ -53,9 +53,9 @@ module "kubernetes" {
   kube_api_hostname              = "mimosa.requiem.garden"
 
   control_plane_nodepools = [
-    { name = "control", type = "cpx22", location = "fsn1", count = 3 }
+    { name = "control", type = "cpx32", location = "fsn1", count = 3 }
   ]
   worker_nodepools = [
-    { name = "worker", type = "cpx22", location = "fsn1", count = 3 }
+    { name = "worker", type = "cpx32", location = "fsn1", count = 3 }
   ]
 }
