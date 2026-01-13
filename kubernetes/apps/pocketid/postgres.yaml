@@ -1,28 +1,8 @@
-kind: postgresql
-apiVersion: acid.zalan.do/v1
-
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
 metadata:
   name: pocketid-postgres
-  namespace: pocketid
-  labels:
-    team: rgarden
-
 spec:
-  teamId: rgarden
-  postgresql:
-    version: "17"
-  numberOfInstances: 1
-  volume:
-    size: 10Gi
-  preparedDatabases:
-    pocketid:
-      defaultUsers: true
-      schemas:
-        public: {}
-  resources:
-    requests:
-      cpu: 100m
-      memory: 200Mi
-    limits:
-      cpu: 500m
-      memory: 500Mi
+  instances: 2
+  storage:
+    size: 5Gi

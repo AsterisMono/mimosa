@@ -22,18 +22,11 @@ spec:
             - containerPort: 1411
               name: http
           env:
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: pocketid-owner-user.pocketid-postgres.credentials.postgresql.acid.zalan.do
-                  key: username
-            - name: DB_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: pocketid-owner-user.pocketid-postgres.credentials.postgresql.acid.zalan.do
-                  key: password
             - name: DB_CONNECTION_STRING
-              value: "postgres://$(DB_USER):$(DB_PASS)@pocketid-postgres.pocketid:5432/pocketid?sslmode=require"
+              valueFrom:
+                secretKeyRef:
+                  name: pocketid-postgres-app
+                  key: uri
           envFrom:
             - configMapRef:
                 name: pocketid-config
