@@ -39,8 +39,3 @@ spec:
                 name: pocketid-config
             - secretRef:
                 name: pocketid-secrets
-
-      volumes:
-        - name: pocketid-data
-          persistentVolumeClaim:
-            claimName: pocketid-pvc

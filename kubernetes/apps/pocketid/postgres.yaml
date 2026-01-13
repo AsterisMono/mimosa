@@ -14,7 +14,6 @@ spec:
   numberOfInstances: 1
   volume:
     size: 10Gi
-    storageClass: hcloud-volumes
   preparedDatabases:
     pocketid:
       defaultUsers: true
