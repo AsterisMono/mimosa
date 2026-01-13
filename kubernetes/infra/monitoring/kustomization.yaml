@@ -4,6 +4,7 @@ kind: Kustomization
 
 resources:
   - https://github.com/prometheus-operator/kube-prometheus.git
+  - network-policy.yaml
 
 patches:
   - patch: |-
