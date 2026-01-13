@@ -36,6 +36,9 @@ module "kubernetes" {
   cilium_hubble_relay_enabled = true
   cilium_hubble_ui_enabled    = true
 
+  longhorn_enabled               = true
+  longhorn_default_storage_class = true
+
   talos_extra_remote_manifests = [
     "https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.34.0/controller.yaml"
   ]
