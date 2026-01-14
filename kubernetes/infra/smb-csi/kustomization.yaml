@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://www.schemastore.org/kustomization.json
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/refs/heads/master/deploy/v1.19.1/csi-smb-controller.yaml
+  - https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/refs/heads/master/deploy/v1.19.1/csi-smb-driver.yaml
+  - https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/refs/heads/master/deploy/v1.19.1/rbac-csi-smb.yaml
+  - https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/refs/heads/master/deploy/v1.19.1/csi-smb-node.yaml
+  - storage-class.yaml
+  - smb-secrets.yaml
