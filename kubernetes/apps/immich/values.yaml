@@ -1,0 +1,29 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          tag: v2.4.1
+        env:
+          DB_URL:
+            valueFrom:
+              secretKeyRef:
+                name: immich-postgres-app
+                key: uri
+immich:
+  metrics:
+    enabled: true
+  persistence:
+    library:
+      existingClaim: immich-library-pvc
+valkey:
+  enabled: true
+  persistence:
+    data:
+      type: persistentVolumeClaim
+      storageClass: longhorn
+machine-learning:
+  persistence:
+    cache:
+      type: persistentVolumeClaim
+      storageClass: longhorn
