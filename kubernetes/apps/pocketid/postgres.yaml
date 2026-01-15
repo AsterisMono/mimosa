@@ -3,6 +3,7 @@ kind: Cluster
 metadata:
   name: pocketid-postgres
 spec:
-  instances: 2
+  instances: 3
   storage:
+    storageClass: longhorn-local
     size: 5Gi

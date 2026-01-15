@@ -3,9 +3,9 @@ kind: Cluster
 metadata:
   name: immich-postgres
 spec:
-  instances: 1
+  instances: 3
   storage:
-    storageClass: hcloud-volumes
+    storageClass: longhorn-local
     size: 10Gi
   imageName: ghcr.io/tensorchord/cloudnative-vectorchord:16.9-0.4.3
   postgresql:
