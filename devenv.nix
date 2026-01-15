@@ -7,6 +7,7 @@
   packages = with pkgs; [
     kubeseal
     kubectl
+    kubectl-cnpg
     kubeconform
     kustomize
     kubernetes-helm
