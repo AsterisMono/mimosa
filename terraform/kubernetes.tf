@@ -48,7 +48,7 @@ module "kubernetes" {
   firewall_use_current_ipv6 = false
 
   firewall_api_source = [
-    "103.151.172.24/32", # HKZ03
+    "103.151.172.30/32", # HKZ03
     "101.88.92.62/32"    # Asai Home
   ]
 
