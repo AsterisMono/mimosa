@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://www.schemastore.org/kustomization.json
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - pds-pvc.yaml
+  - pds-service.yaml
+  - pds-secrets.yaml
+  - pds-stateful-set.yaml
+  - pds-httproute.yaml
+
+namespace: atproto-pds

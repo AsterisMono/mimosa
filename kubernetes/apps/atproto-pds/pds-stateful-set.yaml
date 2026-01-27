@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pds-stateful-set
+spec:
+  serviceName: pds-service
+  replicas: 1
+  podManagementPolicy: OrderedReady
+  revisionHistoryLimit: 0
+  updateStrategy:
+    type: OnDelete
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pds
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: pds
+    spec:
+      securityContext:
+        fsGroup: 1000
+      initContainers:
+        - name: init-dirs
+          image: alpine:3.23
+          command: ["sh", "-c"]
+          args:
+            - |
+              set -eu
+              mkdir -p /data/pds
+          volumeMounts:
+            - name: pds-data
+              mountPath: /data
+      containers:
+        - name: pds
+          image: ghcr.io/bluesky-social/pds:0.4
+          ports:
+            - containerPort: 3000
+              name: http
+          env:
+            - name: PDS_HOSTNAME
+              value: "at.requiem.garden"
+            - name: PDS_JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: pds-secrets
+                  key: PDS_JWT_SECRET
+            - name: PDS_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pds-secrets
+                  key: PDS_ADMIN_PASSWORD
+            - name: PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX
+              valueFrom:
+                secretKeyRef:
+                  name: pds-secrets
+                  key: PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX
+            - name: PDS_DATA_DIRECTORY
+              value: "/data/pds"
+            - name: PDS_BLOBSTORE_DISK_LOCATION
+              value: "/data/pds/blocks"
+            - name: PDS_BLOB_UPLOAD_LIMIT
+              value: "104857600"
+            - name: PDS_DID_PLC_URL
+              value: "https://plc.directory"
+            - name: PDS_BSKY_APP_VIEW_URL
+              value: "https://api.bsky.app"
+            - name: PDS_BSKY_APP_VIEW_DID
+              value: "did:web:api.bsky.app"
+            - name: PDS_REPORT_SERVICE_URL
+              value: "https://mod.bsky.app"
+            - name: PDS_REPORT_SERVICE_DID
+              value: "did:plc:ar7c4by46qjdydhdevvrndac"
+            - name: PDS_CRAWLERS
+              value: "https://bsky.network"
+            - name: LOG_ENABLED
+              value: "true"
+            - name: PDS_EMAIL_SMTP_URL
+              valueFrom:
+                secretKeyRef:
+                  name: pds-secrets
+                  key: PDS_EMAIL_SMTP_URL
+            - name: PDS_EMAIL_FROM_ADDRESS
+              value: "bsky@hyacinthus.requiem.garden"
+          volumeMounts:
+            - name: pds-data
+              mountPath: /data
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 20
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 60
+            periodSeconds: 10
+
+      volumes:
+        - name: pds-data
+          persistentVolumeClaim:
+            claimName: pds-data
