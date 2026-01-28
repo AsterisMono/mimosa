@@ -4,5 +4,7 @@ kind: Kustomization
 
 resources:
   - longhorn-local.yaml
+  - longhorn-default-resource-cm.yaml
+  - s3-backup-creds.yaml
 
 namespace: longhorn-system

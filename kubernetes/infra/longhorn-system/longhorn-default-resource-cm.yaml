@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: longhorn-default-resource
+data:
+  default-resource.yaml: |
+    "backup-target": "s3://mimosa-longhorn-backup@eu-central/"
+    "backup-target-credential-secret": "s3-backup-creds"
+    "backupstore-poll-interval": "180"
