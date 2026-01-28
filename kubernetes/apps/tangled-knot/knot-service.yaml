@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.34.2-standalone-strict/service.json
 apiVersion: v1
 kind: Service
 metadata:
@@ -9,3 +10,17 @@ spec:
     - protocol: TCP
       port: 5555
       targetPort: http
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.34.2-standalone-strict/service.json
+apiVersion: v1
+kind: Service
+metadata:
+  name: knot-ssh-service
+spec:
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: tangled-knot
+  ports:
+    - port: 22
+      targetPort: 22
+      nodePort: 30022

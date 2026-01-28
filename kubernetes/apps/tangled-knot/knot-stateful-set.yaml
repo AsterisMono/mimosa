@@ -27,6 +27,8 @@ spec:
           ports:
             - containerPort: 5555
               name: http
+            - containerPort: 22
+              name: ssh
           env:
             - name: KNOT_SERVER_HOSTNAME
               value: "knot.requiem.garden"
