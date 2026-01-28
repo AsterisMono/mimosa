@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: knot-stateful-set
+spec:
+  serviceName: knot-service
+  replicas: 1
+  podManagementPolicy: OrderedReady
+  revisionHistoryLimit: 0
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tangled-knot
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: tangled-knot
+    spec:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: tangled-knot
+          image: tngl/knot:v1.10.0-alpha
+          ports:
+            - containerPort: 5555
+              name: http
+          env:
+            - name: KNOT_SERVER_HOSTNAME
+              value: "knot.requiem.garden"
+            - name: KNOT_SERVER_OWNER
+              value: "did:plc:arffe327lsrhcinvzy2avhsz" # noa.requiem.garden
+            - name: KNOT_SERVER_DB_PATH
+              value: "/app/knotserver.db"
+            - name: KNOT_REPO_SCAN_PATH
+              value: "/home/git/repositories"
+            - name: KNOT_SERVER_INTERNAL_LISTEN_ADDR
+              value: "localhost:5444"
+          volumeMounts:
+            - name: knot-keys-data
+              mountPath: /etc/ssh/keys
+            - name: knot-app-data
+              mountPath: /app
+            - name: knot-repo-data
+              mountPath: /home/git/repositories
+  volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: knot-keys-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: longhorn
+        resources:
+          requests:
+            storage: 1Gi
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: knot-app-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: longhorn
+        resources:
+          requests:
+            storage: 5Gi
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: knot-repo-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: longhorn
+        resources:
+          requests:
+            storage: 50Gi
