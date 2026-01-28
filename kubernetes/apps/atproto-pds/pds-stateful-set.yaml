@@ -97,8 +97,14 @@ spec:
               port: 3000
             initialDelaySeconds: 60
             periodSeconds: 10
-
-      volumes:
-        - name: pds-data
-          persistentVolumeClaim:
-            claimName: pds-data
+  volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: pds-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: longhorn
+        resources:
+          requests:
+            storage: 20Gi
